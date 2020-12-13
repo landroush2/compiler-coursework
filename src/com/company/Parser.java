@@ -6,10 +6,21 @@ package com.company;//com.sampleCode;
 
    The grammar:
 
-   statement = { expression  ";" } "."
-   expression = term { ( "+" | "-" ) term }
-   term      = factor { ( "*" | "/" ) factor }
-   factor    = number | "(" expression ")"
+    program → stmt-sequence
+    stmt-sequence → statement { ;statement }
+    statement → if-stmt | repeat-stmt | assign-stmt | read-stmt | write stmt
+    if-stmt → if exp then stmt-sequence [else stmt-sequence] end
+    repeat-stmt → repeat stmt-sequence until exp
+    assign-stmt → identifier := exp
+    read-stmt → read identifier
+    write-stmt → write exp
+    exp → simple-exp [comparison-op simple-exp]
+    comparison-op → < | =
+    simple-exp → term [addop term]
+    addop → + | -
+    term → factor [mulop factor]
+    mulop → * | /
+    factor → ( exp ) | number | identifier
 
 */
 
@@ -25,9 +36,22 @@ public class Parser {
 
     public void run() {
         scanner.getToken();
-        statement();
+        program();
     } // run
 
+    private void program() {
+        //    program → stmt-sequence
+        stmtSequence();
+    }
+
+    private void stmtSequence() {
+        //    stmt-sequence → statement { ;statement }
+        statement();
+        scanner.getToken();
+        while (scanner.token == Token.semicolon) {
+            statement();
+        }
+    }
 
     private void statement() {
         //   statement = { expression  ";" } "."

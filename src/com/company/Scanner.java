@@ -4,8 +4,9 @@ import java.io.BufferedReader;
 
 public class Scanner {
     public int token;
-    private char ch = ' ';
+    private char character = ' ';
     private char ident = ' ';
+    private String word = "";
     private int intValue = 0;
     private Buffer buffer;
 
@@ -16,64 +17,116 @@ public class Scanner {
 
 
     public int getToken() {
-        while (Character.isWhitespace(ch))
-            ch = buffer.get();
-        if (Character.isLetter(ch)) {
-            ident = Character.toLowerCase(ch);
-            ch = buffer.get();
-            token = Token.letter;
-        } else if (Character.isDigit(ch)) {
+        while (Character.isWhitespace(character)) {
+            character = buffer.get();
+        }
+        if (Character.isLetter(character)) {
+            word = "";
+            while (Character.isLetter(character)) {
+//            ident = Character.toLowerCase(character);
+                word.concat(Character.toString(character));
+                character = buffer.get();
+            }
+            switch (word){
+                case "if":
+                    character = buffer.get();
+                    token = Token.IF_TOKEN;
+                    break;
+
+                case "then":
+                    character = buffer.get();
+                    token = Token.THEN_TOKEN;
+                    break;
+
+                case "else":
+                    character = buffer.get();
+                    token = Token.ELSE_TOKEN;
+                    break;
+
+                case "end":
+                    character = buffer.get();
+                    token = Token.END_TOKEN;
+                    break;
+
+                case "repeat":
+                    character = buffer.get();
+                    token = Token.REPEAT_TOKEN;
+                    break;
+
+                case "until":
+                    character = buffer.get();
+                    token = Token.UNTIL_TOKEN;
+                    break;
+
+                case "read":
+                    character = buffer.get();
+                    token = Token.READ_TOKEN;
+                    break;
+
+                case "write":
+                    character = buffer.get();
+                    token = Token.WRITE_TOKEN;
+                    break;
+
+                default:
+                    character = buffer.get();
+                    token = Token.IDENTIFIER_TOKEN;
+                    break;
+
+            }
+//            token = Token.letter;
+        } else if (Character.isDigit(character)) {
             intValue = getNumber();
             token = Token.number;
         } else {
-            switch (ch) {
+            switch (character) {
                 case ';':
-                    ch = buffer.get();
+                    character = buffer.get();
                     token = Token.semicolon;
                     break;
 
                 case '.':
-                    ch = buffer.get();
+                    character = buffer.get();
                     token = Token.period;
                     break;
 
                 case '+':
-                    ch = buffer.get();
+                    character = buffer.get();
                     token = Token.plusop;
                     break;
 
                 case '-':
-                    ch = buffer.get();
+                    character = buffer.get();
                     token = Token.minusop;
                     break;
 
                 case '*':
-                    ch = buffer.get();
+                    character = buffer.get();
                     token = Token.timesop;
                     break;
 
                 case '/':
-                    ch = buffer.get();
+                    character = buffer.get();
                     token = Token.divideop;
                     break;
 
                 case '=':
-                    ch = buffer.get();
+                    character = buffer.get();
                     token = Token.assignop;
                     break;
 
                 case '(':
-                    ch = buffer.get();
+                    character = buffer.get();
                     token = Token.lparen;
                     break;
 
                 case ')':
-                    ch = buffer.get();
+                    character = buffer.get();
                     token = Token.rparen;
                     break;
 
                 default:
-                    error("Illegal character " + ch);
+                    error("Illegal character " + character);
                     break;
             } // switch
         } // if
@@ -86,8 +139,8 @@ public class Scanner {
     } // number
 
 
-    public char letter() {
-        return ident;
+    public String identifier() {
+        return word;
     } // letter
 
 
@@ -110,9 +163,9 @@ public class Scanner {
     private int getNumber() {
         int result = 0;
         do {
-            result = result * 10 + Character.digit(ch, 10);
-            ch = buffer.get();
-        } while (Character.isDigit(ch));
+            result = result * 10 + Character.digit(character, 10);
+            character = buffer.get();
+        } while (Character.isDigit(character));
         return result;
     } // getNumber
 
@@ -135,7 +188,7 @@ class Buffer {
             try {
                 line = in.readLine();
             } catch (Exception e) {
-                System.err.println("Invalid read operation");
+                System.err.println("Invalid read operation on line " + lineNo);
                 System.exit(1);
             } // try
             if (line == null) {
