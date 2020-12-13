@@ -33,7 +33,7 @@ public class Parser {
         //   statement = { expression  ";" } "."
         while (scanner.token != Token.period) {
             int value = expression();
-            System.out.println("=> " + value);
+            //System.out.println("=> " + value);
             scanner.getToken();  // flush ";"
         } // while
     } // statement

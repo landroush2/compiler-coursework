@@ -1,8 +1,6 @@
 package com.company;//com.sampleCode;
 
 import java.io.BufferedReader;
-import java.io.DataInputStream;
-import java.io.FileInputStream;
 
 public class Scanner {
     public int token;
@@ -110,12 +108,12 @@ public class Scanner {
 
 
     private int getNumber() {
-        int rslt = 0;
+        int result = 0;
         do {
-            rslt = rslt * 10 + Character.digit(ch, 10);
+            result = result * 10 + Character.digit(ch, 10);
             ch = buffer.get();
         } while (Character.isDigit(ch));
-        return rslt;
+        return result;
     } // getNumber
 
 } // Scanner
@@ -140,8 +138,10 @@ class Buffer {
                 System.err.println("Invalid read operation");
                 System.exit(1);
             } // try
-            if (line == null)
+            if (line == null) {
+                System.out.println("Syntax analysis performed successfully and no errors were found");
                 System.exit(0);
+            }
             column = 0;
             lineNo++;
             System.out.println(line);

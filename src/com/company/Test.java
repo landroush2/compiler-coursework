@@ -9,7 +9,7 @@ public class Test {
         // command args ignored
         Parser parser = new Parser(new Scanner(new BufferedReader(new FileReader("src/com/company/test-input.txt"))));
         parser.run();
-        System.out.println("done");
+        System.out.println("Syntax analysis performed successfully and no errors were found");
     } // main
 
 } // class Test
