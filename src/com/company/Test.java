@@ -1,16 +1,13 @@
 package com.company;
 
 
-import java.io.DataInputStream;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
+import java.io.*;
 
 public class Test {
 
     public static void main(String args[]) throws FileNotFoundException {
         // command args ignored
-        Parser parser = new Parser(new Scanner(new DataInputStream(System.in)));
+        Parser parser = new Parser(new Scanner(new BufferedReader(new FileReader("src/com/company/test-input.txt"))));
         parser.run();
         System.out.println("done");
     } // main

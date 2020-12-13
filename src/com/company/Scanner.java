@@ -1,5 +1,6 @@
 package com.company;//com.sampleCode;
 
+import java.io.BufferedReader;
 import java.io.DataInputStream;
 import java.io.FileInputStream;
 
@@ -10,7 +11,7 @@ public class Scanner {
     private int intValue = 0;
     private Buffer buffer;
 
-    public Scanner(DataInputStream in) {
+    public Scanner(BufferedReader in) {
         buffer = new Buffer(in);
         token = Token.semicolon;
     } // Scanner
@@ -123,9 +124,9 @@ class Buffer {
     private String line = "";
     private int column = 0;
     private int lineNo = 0;
-    private DataInputStream in;
+    private BufferedReader in;
 
-    public Buffer(DataInputStream in) {
+    public Buffer(BufferedReader in) {
         this.in = in;
     } // Buffer
 
