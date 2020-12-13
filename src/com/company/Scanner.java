@@ -1,6 +1,7 @@
 package com.company;//com.sampleCode;
 
 import java.io.DataInputStream;
+import java.io.FileInputStream;
 
 public class Scanner {
     public int token;
