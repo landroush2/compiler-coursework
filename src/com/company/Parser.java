@@ -78,7 +78,7 @@ public class Parser {
                 break;
 
             default:
-                scanner.error("Syntax Error at line: ");
+                scanner.error("Syntax Error on line ");
                 break;
 
         }
@@ -132,14 +132,15 @@ public class Parser {
         simpleExp();
         if (scanner.token == Token.lessthanop || scanner.token == Token.equalsop) {
             comparisonOp();
+            simpleExp();
         }
     }// expression
 
     private void comparisonOp() {
         //    comparison-op → < | =
-        if(scanner.token == Token.lessthanop){
+        if (scanner.token == Token.lessthanop) {
             scanner.match(Token.lessthanop);
-        }else {
+        } else {
             scanner.match(Token.equalsop);
         }
     }
@@ -147,16 +148,17 @@ public class Parser {
     private void simpleExp() {
         //    simple-exp → term [addop term]
         term();
-        if(scanner.token == Token.plusop||scanner.token==Token.minusop){
+        if (scanner.token == Token.plusop || scanner.token == Token.minusop) {
             addOp();
+            term();
         }
     }
 
     private void addOp() {
         //    addop → + | -
-        if(scanner.token==Token.plusop){
+        if (scanner.token == Token.plusop) {
             scanner.match(Token.plusop);
-        }else {
+        } else {
             scanner.match(Token.minusop);
         }
     }
@@ -165,7 +167,7 @@ public class Parser {
     private void term() {
         //        term → factor [mulop factor]
         factor();
-        if(scanner.token==Token.timesop||scanner.token==Token.divideop){
+        if (scanner.token == Token.timesop || scanner.token == Token.divideop) {
             mulOp();
             factor();
         }
@@ -173,9 +175,9 @@ public class Parser {
 
     private void mulOp() {
         //    mulop → * | /
-        if(scanner.token==Token.timesop){
+        if (scanner.token == Token.timesop) {
             scanner.match(Token.timesop);
-        }else {
+        } else {
             scanner.match(Token.divideop);
         }
     }
@@ -183,7 +185,7 @@ public class Parser {
 
     private void factor() {
         //    factor → ( exp ) | number | identifier
-        switch (scanner.token){
+        switch (scanner.token) {
             case Token.lparen:
                 scanner.match(Token.lparen);
                 expression();
