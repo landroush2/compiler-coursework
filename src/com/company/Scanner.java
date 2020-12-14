@@ -1,11 +1,12 @@
 package com.company;//com.sampleCode;
 
 import java.io.BufferedReader;
+import java.util.ArrayList;
 
 public class Scanner {
     public int token;
     private char character = ' ';
-    private char ident = ' ';
+    private ArrayList<String> log = new ArrayList<>();
     private String word = "";
     private int intValue = 0;
     private Buffer buffer;
@@ -24,9 +25,10 @@ public class Scanner {
             word = "";
             while (Character.isLetter(character)) {
 //            ident = Character.toLowerCase(character);
-                word.concat(Character.toString(character));
+                word+=Character.toString(character);
                 character = buffer.get();
             }
+            //System.out.println( "word length: " + word.length());
             switch (word){
                 case "if":
                     character = buffer.get();
@@ -110,7 +112,8 @@ public class Scanner {
                     token = Token.divideop;
                     break;
 
-                case '=':
+                case ':':
+                    buffer.get();
                     character = buffer.get();
                     token = Token.assignop;
                     break;
@@ -125,11 +128,24 @@ public class Scanner {
                     token = Token.rparen;
                     break;
 
+                case '<':
+                    character = buffer.get();
+                    token = Token.lessthanop;
+                    break;
+
+
+                case '=':
+                    character = buffer.get();
+                    token = Token.equalsop;
+                    break;
+
                 default:
-                    error("Illegal character " + character + "at line: ");
+                    error("Illegal character " + character + " on line: ");
                     break;
             } // switch
         } // if
+        log.add(Token.spelling[token]);
+        System.out.println("Matched token type: " + Token.spelling[token]);
         return token;
     } // getToken
 
@@ -145,18 +161,20 @@ public class Scanner {
 
 
     public void match(int which) {
-//        if (token != which) {
-//            error("Invalid token " + Token.toString(token) +
-//                    "-- expecting " + Token.toString(which) + " at line: ");
-//            System.exit(1);
-//        } // if
-        token = getToken();
+        if (token != which) {
+            error("Invalid token " + Token.toString(token) +
+                    " -- expecting " + Token.toString(which) + " on line ");
 
+            System.exit(1);
+        } // if
+
+        token = getToken();
     } // match
 
 
     public void error(String msg) {
-        System.err.println(msg + this.buffer.lineNo);
+        System.err.println(msg + this.buffer.lineNo + " at column "+this.buffer.column);
+        System.out.println(log);
         System.exit(1);
     } // error
 
@@ -174,7 +192,7 @@ public class Scanner {
 
 class Buffer {
     private String line = "";
-    private int column = 0;
+    public int column = 0;
     public int lineNo = 0;
     private BufferedReader in;
 

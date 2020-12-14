@@ -25,7 +25,7 @@ class Token {
     public static final int WRITE_TOKEN = 20;
 
 
-    private static String[] spelling = {";", ".", "+", "-", "*", "/", ":=", "(", ")", "letter", "number", "<", "=", "if", "then", "else", "end", "repeat", "until", "read", "write"};
+    public static String[] spelling = {";", ".", "+", "-", "*", "/", ":=", "(", ")", "identifier", "number", "<", "=", "if", "then", "else", "end", "repeat", "until", "read", "write"};
 
     public static String toString(int i) {
         if (i < 0 || i > WRITE_TOKEN)

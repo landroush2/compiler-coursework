@@ -199,7 +199,7 @@ public class Parser {
                 break;
 
             default:
-                scanner.error("Expected parantheses, a number or an identifier at line: ");
+                scanner.error("Expected parentheses, a number or an identifier at line: ");
                 break;
         }
     } // factor
