@@ -126,7 +126,7 @@ public class Scanner {
                     break;
 
                 default:
-                    error("Illegal character " + character);
+                    error("Illegal character " + character + "at line: ");
                     break;
             } // switch
         } // if
@@ -145,17 +145,18 @@ public class Scanner {
 
 
     public void match(int which) {
+//        if (token != which) {
+//            error("Invalid token " + Token.toString(token) +
+//                    "-- expecting " + Token.toString(which) + " at line: ");
+//            System.exit(1);
+//        } // if
         token = getToken();
-        if (token != which) {
-            error("Invalid token " + Token.toString(token) +
-                    "-- expecting " + Token.toString(which));
-            System.exit(1);
-        } // if
+
     } // match
 
 
     public void error(String msg) {
-        System.err.println(msg);
+        System.err.println(msg + this.buffer.lineNo);
         System.exit(1);
     } // error
 
@@ -174,7 +175,7 @@ public class Scanner {
 class Buffer {
     private String line = "";
     private int column = 0;
-    private int lineNo = 0;
+    public int lineNo = 0;
     private BufferedReader in;
 
     public Buffer(BufferedReader in) {
@@ -188,7 +189,7 @@ class Buffer {
             try {
                 line = in.readLine();
             } catch (Exception e) {
-                System.err.println("Invalid read operation on line " + lineNo);
+                System.err.println("Invalid read operation on line: " );
                 System.exit(1);
             } // try
             if (line == null) {
