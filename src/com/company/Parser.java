@@ -47,8 +47,8 @@ public class Parser {
     private void stmtSequence() {
         //    stmt-sequence → statement { ;statement }
         statement();
-        while (scanner.token == Token.semicolon) {
-            scanner.match(Token.semicolon);
+        while (scanner.token == Token.sc) {
+            scanner.match(Token.sc);
             statement();
         }
     }

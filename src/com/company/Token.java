@@ -2,7 +2,7 @@ package com.company;//com.sampleCode;
 
 class Token {
 
-    public static final int semicolon = 0;
+    public static final int sc = 0;
     public static final int period = 1;
     public static final int plusop = 2;
     public static final int minusop = 3;

@@ -13,7 +13,7 @@ public class Scanner {
 
     public Scanner(BufferedReader in) {
         buffer = new Buffer(in);
-        token = Token.semicolon;
+        token = Token.sc;
     } // Scanner
 
 
@@ -84,7 +84,7 @@ public class Scanner {
             switch (character) {
                 case ';':
                     character = buffer.get();
-                    token = Token.semicolon;
+                    token = Token.sc;
                     break;
 
                 case '.':
